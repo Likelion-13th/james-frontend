@@ -1,0 +1,104 @@
+@font-face{
+    font-family: 'KaiseiDecol-Regular';
+    src: url(../../public/font/KaiseiDecol-Regular.ttf) format("truetype");
+}
+
+@font-face{
+    font-family: 'NanumMyeongjo';
+    src: url(../../public/font/NanumMyeongjo-Regular.ttf) format("truetype");
+}
+
+/* Home */
+.home-container {
+    width: 100%;
+}
+
+/* Menu */
+.menu-container {
+    display: flex;
+    width: 100%;
+    font-family: 'KaiseiDecol-Regular';
+}
+
+.menu-section {
+    display: flex;
+    width: 50%;
+    position: relative;
+}
+
+.menu-section::before{
+    content: '';
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    right: 16px;
+    bottom: 16px;
+    border: 2px solid white;
+    border-radius: 20px;
+}
+
+.menu-perfume {
+    width: 100%;
+    display: block;
+}
+
+.text-overlay {
+    position: absolute;
+    color: white;
+    font-size: 48px;
+}
+
+.text-perfume{
+    left: 28px;
+    bottom: 28px;
+}
+
+.text-diffuser{
+    right: 28px;
+    bottom: 28px;
+}
+
+/* Banner */
+.banner-container{
+    width: 100%;
+}
+
+/* Info */
+.Info-container {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    font-family: 'KaiseiDecol-Regular';
+    padding: 50px;
+}
+
+.Info-section {
+    display: flex;
+    width: 50%;
+    justify-content: flex-end;
+    position: relative;
+}
+
+.Info-img {
+    display: flex;
+}
+
+.about_us {
+    width: 70%;
+}
+
+.Info-txt{
+    font-size: 50px;
+    text-align: right;
+    writing-mode: vertical-rl;
+}
+
+.Info-section-right {
+    font-family: 'NanumMyeongjo';
+}
+
+.Info-title {
+    display: flex;
+    width: 100%;
+    font-size: 40px;
+}

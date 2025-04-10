@@ -5,6 +5,7 @@ import { Link, useLocation } from "react-router-dom";
 const Header = () => {
    const location = useLocation();
    const currentPage = location.pathname;
+   
     return(
         <header className="header-container">
             <div className="header-section">

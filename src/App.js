@@ -8,11 +8,13 @@ import Mypage from './pages/Mypage/Mypage';
 import New from './pages/ProductPage/New';
 import Diffuser from './pages/ProductPage/Diffuser';
 import Perfume from './pages/ProductPage/Perfume';
+import ToolBar from './components/ToolBar';
 
 function App() {
   return (
     <Router>
       <Header />
+      <ToolBar />
         <Routes>
           <Route path='/' element={<Home />}/>
           <Route path='/mypage' element={<Mypage />}/>
