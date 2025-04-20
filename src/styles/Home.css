@@ -70,6 +70,7 @@
     align-items: center;
     font-family: 'KaiseiDecol-Regular';
     padding: 50px;
+    box-sizing: border-box;
 }
 
 .Info-section {
@@ -94,6 +95,7 @@
 }
 
 .Info-section-right {
+    justify-items: flex-start;
     font-family: 'NanumMyeongjo';
 }
 

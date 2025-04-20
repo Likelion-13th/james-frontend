@@ -9,12 +9,18 @@
 }
 
 .header-container {
+    position: fixed;
     display: flex;
     justify-content: space-between;
     align-items: center;
     font-family: "KaiseiDecol-Regular";
     background-color: #EAEAEA;
     padding: 25px 30px;
+    top: 0;
+    width: 100%;
+    z-index: 1;
+    opacity: 80%;
+    box-sizing: border-box;
 }
 
 .header-container:has(a.my-active){
