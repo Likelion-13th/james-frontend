@@ -27,7 +27,7 @@ const History = () => {
                             <td>
                                 <div className="history-list">
                                     <div className="history-image">
-                                        <img className="h-image" src="../../img/maison.png"/>
+                                        <img className="h-image" src="../../img/maison.png" alt="maison"/>
                                     </div>
                                     <div className="history-script">
                                         <div className="script-title">Masion Margiela</div>
@@ -53,7 +53,7 @@ const History = () => {
                             <td>
                                 <div className="history-list">
                                     <div className="history-image">
-                                        <img className="h-image" src="../../img/jomalone.png"/>
+                                        <img className="h-image" src="../../img/jomalone.png" alt="jomalone"/>
                                     </div>
                                     <div className="history-script">
                                         <div className="script-title">Jo Malone</div>
@@ -79,7 +79,7 @@ const History = () => {
                             <td>
                                 <div className="history-list">
                                     <div className="history-image">
-                                        <img className="h-image" src="../../img/granhand.png"/>
+                                        <img className="h-image" src="../../img/granhand.png" alt="granhand"/>
                                     </div>
                                     <div className="history-script">
                                         <div className="script-title">GRANHAND</div>
