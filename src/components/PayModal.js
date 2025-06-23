@@ -52,7 +52,7 @@ const PayModal = ({product, onClose}) => {
 
                             <div className="quantity-control">
                                 <button
-                                    className="qunatity-button"
+                                    className="quantity-button"
                                     onClick={() => handleQuantityChange("minus")}
                                     >
                                         -
@@ -101,7 +101,7 @@ const PayModal = ({product, onClose}) => {
                                 {totalPrice.toLocaleString()} 원
                             </div>
                             <div className="total-value discount">
-                                -{mileageToUse.toLocaleString()} d원
+                                -{mileageToUse.toLocaleString()} 원
                             </div>
                             <div className="total-value">무료배송</div>
                         </div>
