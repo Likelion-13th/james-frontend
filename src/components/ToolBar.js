@@ -33,7 +33,10 @@ const ToolBar = ( {isLogin, onLoginChange } ) => {
                 accept: "*/*",
                 Authorization: `Bearer ${cookies.accessToken}`,
             },
-        }).then(() => {})
+        }).then(() => {
+            onLoginChange(false);
+            removeCookie("accessToken", { path: '/' });
+        })
         .catch((err) => {
             console.error("LOGOUT API 요청 실패: ", err);
         });
