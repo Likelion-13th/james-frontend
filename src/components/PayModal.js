@@ -1,10 +1,14 @@
 import React, {useState, useEffect} from "react";
 import "../styles/PayModal.css";
+import axios from "axios";
+import { useCookies } from "react-cookie";
 
 const PayModal = ({product, onClose}) => {
+    const [cookies] = useCookies(["accessToken"]);
+    //const maxMileage = 100000; //최대 사용 마일리지
+    const [maxMileage, setMaxMileage] = useState(0);
     const [quantity, setQuantity] = useState(1);
     const [mileageToUse, setMileageToUse] = useState("");
-    const maxMileage = 100000;
     const [, setProductPrice] = useState(product.price);
     const [totalPrice, setTotalPrice] = useState(product.price);
 
@@ -19,13 +23,57 @@ const PayModal = ({product, onClose}) => {
         setTotalPrice(Math.max(newProductPrice - mileageToUse, 0));
     }, [quantity, mileageToUse, product.price]);
 
+    useEffect(() => {
+        axios
+            .get("/users/mileage", {
+                headers: {
+                    accept: "*/*",
+                    Authorization: `Bearer ${cookies.accessToken}`,
+                },
+            })
+            .then((response) => {
+                setMaxMileage(response.data.result.maxMileage); //이거 기억해두기
+            })
+            .catch((err) => {
+                console.error("MILEAGE API 요청 실패: ", err);
+            });
+        }, [cookies.accessToken]);
+
+    
+    const handlePayment = async () => {
+        try{
+            const response = await axios.post("/orders", 
+            {
+                itemId: product.id,
+                quantity: quantity,
+                mileageToUse: mileageToUse,
+            }, 
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${cookies.accessToken}`,
+                },
+            }
+        );
+        
+        if (response.data.isSuccess) {
+            alert("주문이 성공적으로 생성되었습니다.");
+            onClose();
+        } else {
+            alert(`주문 생성에 실패: ${response.data.message}`);
+            }
+        } catch (error){
+                alert("주문 생성 중 오류가 발생했습니다.");
+                console.error("결제 실패: ", error);
+        } 
+    };
+
     //input에 입력할 때 실행
     const handleMileageChange = (e) => {
         const value = e.target.value;
         const numericValue = value === " " ? 0 : Math.min(Number(value),maxMileage);
         setMileageToUse(numericValue);
     };
-
 
     return(
         <div className="modal">
@@ -107,7 +155,7 @@ const PayModal = ({product, onClose}) => {
                         </div>
                     </div>
                 </div>
-                <button className="pay-button">결제하기</button>
+                <button className="pay-button" onClick={handlePayment}>결제하기</button>
             </div>
         </div>
     )

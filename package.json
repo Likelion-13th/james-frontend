@@ -2,7 +2,7 @@
   "name": "james-frontend",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://sajang-dev.ap-northeast-2.elasticbeanstalk.com",
+  "proxy": "http://sajang.ap-northeast-2.elasticbeanstalk.com",
   "dependencies": {
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.6.3",

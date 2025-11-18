@@ -1,53 +1,12 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import Banner from "./Banner";
 import ProductCard from "./ProductCard";
 import PayModal from "../../components/PayModal";
+import axios from "axios";
+import { useCookies } from "react-cookie";
 
 const New = () => {
-
-    const products = [
-        {
-            id: 1,
-            name: "퍼퓸",
-            brand: "브랜드",
-            price: 60000,
-            imagePath: "/img/perfume_1.png",
-            isNew: true,
-        },
-        {
-            id: 2,
-            name: "디퓨저",
-            brand: "브랜드",
-            price: 50000,
-            imagePath: "/img/diffuser_1.png",
-            isNew: true,
-        },
-        {
-            id: 3,
-            name: "디퓨저",
-            brand: "브랜드",
-            price: 30000,
-            imagePath: "/img/diffuser_5.png",
-            isNew: true,
-        },
-        {
-            id: 4,
-            name: "퍼퓸",
-            brand: "브랜드",
-            price: 70000,
-            imagePath: "/img/perfume_4.png",
-            isNew: true,
-        },
-        {
-            id: 5,
-            name: "퍼퓸",
-            brand: "브랜드",
-            price: 253000,
-            imagePath: "/img/perfume_7.png",
-            isNew: true,
-        },
-    ]
-
+    const [products, setProducts] = useState([]);
     const [selectedProduct, setSelectedProduct] = useState(null);
     const [isModalOpen, setModalOpen] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
@@ -58,10 +17,15 @@ const New = () => {
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
     const currentProducts = products.slice(startIndex, endIndex);
+    const [cookies] = useCookies(["accessToken"]);
    
     
     const handleCardClick = (product) => {
         setSelectedProduct(product);
+        if (typeof cookies.accessToken !== "string") {
+            alert("로그인이 필요한 서비스입니다.");
+            return;
+        }
         setModalOpen(true);
     }
     
@@ -73,6 +37,19 @@ const New = () => {
     const handlePageChange = (pageNumber) => {
         setCurrentPage(pageNumber);
     };
+
+    useEffect(() => {
+            axios.get("/categories/1/items", {
+                headers: {
+                    accept: "*/*",
+                },
+            }).then((response) => {
+                setProducts(response.data.result);
+            })
+            .catch((err) => {
+                console.error("NEW ITEMS API 요청 실패: ", err);
+            });
+    }, []);
 
     return(
         <div>

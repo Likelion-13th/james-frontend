@@ -1,71 +1,35 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Banner from "./Banner";
 import ProductCard from "./ProductCard";
 import PayModal from "../../components/PayModal";
+import axios from "axios";
+import { useCookies } from "react-cookie";
+
 
 const Diffuser = () => {
-
-     const products = [
-        {
-            id: 1,
-            name: "디퓨져",
-            brand: "브랜드",
-            price: 60000,
-            imagePath: "/img/diffuser_1.png",
-            isNew: false,
-        },
-        {
-            id: 2,
-            name: "디퓨저",
-            brand: "브랜드",
-            price: 30000,
-            imagePath: "/img/diffuser_2.png",
-            isNew: false,
-        },
-        {
-            id: 3,
-            name: "디퓨저",
-            brand: "브랜드",
-            price: 20000,
-            imagePath: "/img/diffuser_3.png",
-            isNew: false,
-        },
-        {
-            id: 4,
-            name: "디퓨저",
-            brand: "브랜드",
-            price: 70000,
-            imagePath: "/img/diffuser_4.png",
-            isNew: false,
-        },
-        {
-            id: 5,
-            name: "디퓨저",
-            brand: "브랜드",
-            price: 50000,
-            imagePath: "/img/diffuser_5.png",
-            isNew: false,
-        }
-    ]
-
+    const [products, setProducts] = useState([]);
     const [selectedProduct, setSelectedProduct] = useState(null);
     const [isModalOpen, setModalOpen] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 15;
+    const itemsPerPage = 10;
         
     const totalPages = Math.ceil(products.length / itemsPerPage);
         
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
     const currentProducts = products.slice(startIndex, endIndex);
-    
-        
+    const [cookies] = useCookies(["accessToken"]);
+
     const handleCardClick = (product) => {
         setSelectedProduct(product);
+        if (typeof cookies.accessToken !== "string") {
+            alert("로그인이 필요한 서비스입니다.");
+            return;
+        }
         setModalOpen(true);
     }
         
-    const handleCloseClick = () => {
+    const handleCloseModal = () => {
         setSelectedProduct(null);
         setModalOpen(false);
     }
@@ -73,6 +37,19 @@ const Diffuser = () => {
     const handlePageChange = (pageNumber) => {
         setCurrentPage(pageNumber);
     };
+
+    useEffect(() => {
+         axios.get("/categories/2/items", {
+            headers: {
+                accept: "*/*",
+            },
+        }).then((response) => {
+            setProducts(response.data.result);
+        })
+        .catch((err) => {
+            console.error("CATEGORY API 요청 실패: ", err);
+        });
+    }, []);
 
     return (
         <div>
@@ -88,8 +65,6 @@ const Diffuser = () => {
                     ))}
                 </div>
             </div>
-            {isModalOpen && (
-                <PayModal product={selectedProduct} onClose={handleCloseClick}/>)}
             <div className="paging">
                   {currentPage > 1 && (
                     <button onClick={()=> handlePageChange(currentPage-1)}>
@@ -113,6 +88,9 @@ const Diffuser = () => {
                     </button>
                 )}
             </div>
+            {isModalOpen && (
+                <PayModal product={selectedProduct} onClose={handleCloseModal}/>
+            )}
         </div>
     );
 };
